@@ -3,9 +3,18 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { envs } from './config';
 import { env } from 'process';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
+    AppModule,
+    {
+      transport: Transport.TCP,
+      options: {
+        port: envs.port,
+      }
+    },
+  );
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -14,8 +23,7 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(envs.port ?? 3000);
-  console.log(`app runnig ${envs.port}`)
-
+  await app.listen();
+  console.log(`productos microservice running  ${envs.port}`);
 }
 bootstrap();
