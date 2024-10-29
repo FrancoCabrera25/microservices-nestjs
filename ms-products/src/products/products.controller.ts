@@ -33,7 +33,7 @@ export class ProductsController {
   //   return this.productsService.findOne(+id);
   // }
   findOne(@Payload('id', ParseIntPipe) id: number) {
-    return this.productsService.findOne(+id);
+    return this.productsService.findOne(id);
   }
 
   @Patch(':id')
