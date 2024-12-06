@@ -10,25 +10,30 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { catchError, throwError } from 'rxjs';
 import { PaginationDto } from 'src/common';
 import { PRODUCT_SERVICE } from 'src/config';
 
 @Controller('products')
 export class ProductsController {
-  constructor(@Inject(PRODUCT_SERVICE) private readonly productsClient: ClientProxy) {}
+  constructor(
+    @Inject(PRODUCT_SERVICE) private readonly productsClient: ClientProxy,
+  ) {}
 
   @Post()
   createProduct() {}
 
   @Get()
   findAlloducts(@Query() paginationDto: PaginationDto) {
-    return this.productsClient.send({cmd: 'find_all_product'}, paginationDto);
+    return this.productsClient.send({ cmd: 'find_all_product' }, paginationDto);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.productsClient.send({cmd: 'find_one_product'}, { id });
+    return this.productsClient
+      .send({ cmd: 'find_one_product' }, { id })
+      .pipe(catchError((error) => throwError(() => new RpcException(error))));
   }
 
   @Delete(':id')
