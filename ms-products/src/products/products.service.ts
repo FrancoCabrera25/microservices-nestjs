@@ -1,4 +1,5 @@
 import {
+  HttpStatus,
   Injectable,
   Logger,
   NotFoundException,
@@ -45,16 +46,18 @@ export class ProductsService extends PrismaClient implements OnModuleInit {
     const product = await this.product.findFirst({ where: { id } });
 
     if (!product) {
-      throw new RpcException(`Product with id ${id} not exist`);
+      throw new RpcException({
+        message: `Product with id ${id} not exist`,
+        status: HttpStatus.BAD_REQUEST,
+      });
     }
 
     return product;
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
-    
-    const { id: _, ...data} = updateProductDto;
-    
+    const { id: _, ...data } = updateProductDto;
+
     await this.findOne(id);
 
     return this.product.update({

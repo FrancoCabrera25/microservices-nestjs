@@ -19,7 +19,7 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @Post()
+ // @Post()
   @MessagePattern({ cmd: 'create_product' })
   // create(@Body() createProductDto: CreateProductDto) {
   //   return this.productsService.create(createProductDto);
@@ -28,7 +28,7 @@ export class ProductsController {
     return this.productsService.create(createProductDto);
   }
 
-  @Get()
+  //@Get()
   @MessagePattern({ cmd: 'find_all_product' })
   // findAll(@Query() paginationDto: PaginationDto) {
   //   return this.productsService.findAll(paginationDto);
@@ -37,7 +37,7 @@ export class ProductsController {
     return this.productsService.findAll(paginationDto);
   }
 
-  @Get(':id')
+  //@Get(':id')
   @MessagePattern({ cmd: 'find_one_product' })
   // findOne(@Param('id') id: string) {
   //   return this.productsService.findOne(+id);
@@ -46,7 +46,7 @@ export class ProductsController {
     return this.productsService.findOne(id);
   }
 
-  @Patch(':id')
+  //@Patch(':id')
   @MessagePattern({ cmd: 'update_product' })
   // update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
   //   return this.productsService.update(+id, updateProductDto);
@@ -55,7 +55,7 @@ export class ProductsController {
     return this.productsService.update(updateProductDto.id, updateProductDto);
   }
 
-  @Delete(':id')
+  //@Delete(':id')
   @MessagePattern({ cmd: 'delete_product' })
   // remove(@Param('id') id: string) {
   //   return this.productsService.remove(+id);
