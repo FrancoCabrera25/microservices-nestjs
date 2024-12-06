@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -10,7 +20,7 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  @MessagePattern({cmd: 'create_product'})
+  @MessagePattern({ cmd: 'create_product' })
   // create(@Body() createProductDto: CreateProductDto) {
   //   return this.productsService.create(createProductDto);
   // }
@@ -19,7 +29,7 @@ export class ProductsController {
   }
 
   @Get()
-  @MessagePattern({cmd: 'find_all_product'})
+  @MessagePattern({ cmd: 'find_all_product' })
   // findAll(@Query() paginationDto: PaginationDto) {
   //   return this.productsService.findAll(paginationDto);
   // }
@@ -28,7 +38,7 @@ export class ProductsController {
   }
 
   @Get(':id')
-  @MessagePattern({cmd: 'find_one_product'})
+  @MessagePattern({ cmd: 'find_one_product' })
   // findOne(@Param('id') id: string) {
   //   return this.productsService.findOne(+id);
   // }
@@ -37,7 +47,7 @@ export class ProductsController {
   }
 
   @Patch(':id')
-  @MessagePattern({cmd: 'update_product'})
+  @MessagePattern({ cmd: 'update_product' })
   // update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
   //   return this.productsService.update(+id, updateProductDto);
   // }
@@ -46,11 +56,10 @@ export class ProductsController {
   }
 
   @Delete(':id')
-  @MessagePattern({cmd: 'delete_product'})
+  @MessagePattern({ cmd: 'delete_product' })
   // remove(@Param('id') id: string) {
   //   return this.productsService.remove(+id);
   // }
-
   remove(@Payload('id', ParseIntPipe) id: string) {
     return this.productsService.remove(+id);
   }
