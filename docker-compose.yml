@@ -27,6 +27,7 @@ services:
       - PORT=3004
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=${DATABASE_URL_AUTH}
+      - JWT_SECRET=${JWT_SECRET}
 
   # ms-products:
   #     build: ./ms-products
